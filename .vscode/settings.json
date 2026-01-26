@@ -1,0 +1,9 @@
+{
+    "ollama.models": [
+      {
+        "name": "qwen2.5-coder:7b",
+        "displayName": "Qwen 7B Coder (VPS)",
+        "endpoint": "http://localhost:11434"
+      }
+    ]
+  }
