@@ -1,7 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import Header from '@/components/Header'
+import DashboardHeader from '@/components/dashboard/DashboardHeader'
+import PriorityBadge from '@/components/dashboard/PriorityBadge'
+import StatusBadge from '@/components/dashboard/StatusBadge'
 import { mockSubmissions, Submission } from '@/lib/mockData'
 
 export default function SubmissionsPage() {
@@ -17,24 +19,23 @@ export default function SubmissionsPage() {
   })
 
   return (
-    <div>
-      <Header 
+    <div className="min-h-screen">
+      <DashboardHeader
         title="Request Submissions" 
         subtitle={`${filteredSubmissions.length} total request${filteredSubmissions.length !== 1 ? 's' : ''} • Filter by status and priority`}
       />
       
-      <div className="p-8">
+      <div className="p-4 sm:p-6 lg:p-8">
         {/* Filters and Actions */}
-        <div className="bg-white rounded-lg shadow-md border-l-4 border-umak-yellow p-6 mb-6">
-          <div className="flex flex-wrap items-center justify-between gap-4">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 sm:p-6 mb-6">
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
             {/* Filters */}
-            <div className="flex items-center gap-4">
-              <label className="text-sm font-semibold text-gray-700 font-metropolis">Filter by:</label>
-              
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4">
+              <label className="text-sm font-semibold text-gray-700 font-metropolis whitespace-nowrap">Filter by:</label>
               <select
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
-                className="px-4 py-2.5 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-umak-blue focus:border-umak-blue font-metropolis"
+                className="w-full sm:w-auto px-4 py-2.5 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-umak-blue focus:border-umak-blue font-metropolis text-sm"
               >
                 <option>All Status</option>
                 <option>Pending</option>
@@ -45,7 +46,7 @@ export default function SubmissionsPage() {
               <select
                 value={filterPriority}
                 onChange={(e) => setFilterPriority(e.target.value)}
-                className="px-4 py-2.5 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-umak-blue focus:border-umak-blue font-metropolis"
+                className="w-full sm:w-auto px-4 py-2.5 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-umak-blue focus:border-umak-blue font-metropolis text-sm"
               >
                 <option>All Priority</option>
                 <option>High</option>
@@ -152,33 +153,5 @@ export default function SubmissionsPage() {
         </div>
       </div>
     </div>
-  )
-}
-
-function PriorityBadge({ priority }: { priority: string }) {
-  const colors = {
-    High: 'bg-red-600 text-white',
-    Medium: 'bg-yellow-500 text-white',
-    Low: 'bg-green-600 text-white',
-  }
-  
-  return (
-    <span className={`px-4 py-1.5 rounded text-xs font-bold font-metropolis uppercase tracking-wide ${colors[priority as keyof typeof colors]}`}>
-      {priority}
-    </span>
-  )
-}
-
-function StatusBadge({ status }: { status: string }) {
-  const colors = {
-    Pending: 'bg-orange-500 text-white',
-    'In Progress': 'bg-umak-blue-2 text-white',
-    Completed: 'bg-green-600 text-white',
-  }
-  
-  return (
-    <span className={`px-4 py-1.5 rounded text-xs font-bold font-metropolis uppercase tracking-wide ${colors[status as keyof typeof colors]}`}>
-      {status}
-    </span>
   )
 }

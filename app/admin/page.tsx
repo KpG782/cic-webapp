@@ -27,51 +27,35 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-umak-blue via-umak-blue-100 to-umak-blue flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        {/* Back to Home */}
-        <div className="mb-6">
-          <Link 
-            href="/" 
-            className="text-white hover:text-umak-yellow font-metropolis font-semibold flex items-center gap-2"
-          >
-            ← Back to Request Form
-          </Link>
-        </div>
-
-        {/* Logo Section */}
-        <div className="text-center mb-8">
-          <div className="inline-block bg-umak-yellow p-5 rounded-2xl mb-6 shadow-2xl">
-            <div className="w-20 h-20 bg-umak-blue rounded-xl flex items-center justify-center">
-              <span className="text-4xl font-marcellus text-umak-yellow font-bold">CIC</span>
-            </div>
-          </div>
-          <h1 className="text-4xl font-marcellus text-white mb-3">
-            Admin Portal
-          </h1>
-          <p className="text-umak-yellow text-sm font-metropolis font-semibold tracking-wide mb-1">
-            CENTER FOR INTEGRATED COMMUNICATIONS
-          </p>
-          <p className="text-gray-300 text-xs font-metropolis">
-            University of Makati
-          </p>
-        </div>
-
-        {/* Login Card */}
-        <div className="bg-white rounded-2xl shadow-2xl p-8 border-t-4 border-umak-yellow">
+    <div className="min-h-screen flex flex-col lg:flex-row">
+      {/* Left Side - Login Form */}
+      <div className="w-full lg:w-1/2 bg-white flex items-center justify-center p-6 sm:p-8 lg:p-12">
+        <div className="w-full max-w-md">
+          {/* Back to Home */}
           <div className="mb-8">
-            <h2 className="text-3xl font-marcellus text-umak-blue mb-2">
-              Administrator Login
-            </h2>
-            <p className="text-gray-600 text-sm font-metropolis">
-              Access the request management system
+            <Link 
+              href="/" 
+              className="text-umak-blue hover:text-umak-blue-2 font-metropolis font-semibold flex items-center gap-2 text-sm transition-colors"
+            >
+              ← Back to Request Form
+            </Link>
+          </div>
+
+          {/* Header */}
+          <div className="mb-8">
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-marcellus text-umak-blue mb-3">
+              Admin Portal
+            </h1>
+            <p className="text-gray-600 text-sm sm:text-base font-metropolis">
+              Sign in to access the request management system
             </p>
           </div>
 
+          {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email Input */}
             <div>
-              <label htmlFor="email" className="block text-sm font-bold text-gray-700 mb-2 font-metropolis">
+              <label htmlFor="email" className="block text-xs font-bold text-gray-700 mb-2 font-metropolis uppercase tracking-wider">
                 Email Address
               </label>
               <input
@@ -80,14 +64,14 @@ export default function AdminLoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="your.email@umak.edu.ph"
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-umak-blue focus:border-umak-blue transition-all font-metropolis"
+                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-umak-blue focus:border-umak-blue transition-all font-metropolis text-base"
                 required
               />
             </div>
 
             {/* Password Input */}
             <div>
-              <label htmlFor="password" className="block text-sm font-bold text-gray-700 mb-2 font-metropolis">
+              <label htmlFor="password" className="block text-xs font-bold text-gray-700 mb-2 font-metropolis uppercase tracking-wider">
                 Password
               </label>
               <input
@@ -96,7 +80,7 @@ export default function AdminLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-umak-blue focus:border-umak-blue transition-all font-metropolis"
+                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-umak-blue focus:border-umak-blue transition-all font-metropolis text-base"
                 required
               />
             </div>
@@ -107,7 +91,7 @@ export default function AdminLoginPage() {
                 <input type="checkbox" className="rounded border-gray-300 text-umak-blue focus:ring-umak-blue" />
                 <span className="text-gray-600 font-metropolis">Remember me</span>
               </label>
-              <a href="#" className="text-umak-blue hover:text-umak-blue-50 font-bold font-metropolis">
+              <a href="#" className="text-umak-blue hover:text-umak-blue-2 font-semibold font-metropolis transition-colors">
                 Forgot password?
               </a>
             </div>
@@ -116,45 +100,96 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-umak-yellow text-umak-blue py-4 rounded-lg font-bold hover:bg-umak-yellow-50 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-xl font-metropolis text-lg"
+              className="w-full bg-umak-blue text-white py-4 rounded-md font-bold hover:bg-umak-blue-2 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg font-metropolis text-sm uppercase tracking-widest"
             >
               {loading ? (
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-umak-blue"></div>
+                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
               ) : (
                 <>
-                  <LogIn size={20} />
-                  SIGN IN TO ADMIN PORTAL
+                  <LogIn size={18} />
+                  Sign In
                 </>
               )}
             </button>
           </form>
 
           {/* Demo Credentials */}
-          <div className="mt-6 pt-6 border-t-2 border-gray-200">
-            <p className="text-xs text-gray-500 text-center mb-3 font-metropolis font-semibold uppercase tracking-wide">
-              Demo Credentials (Testing Only)
+          <div className="mt-8 pt-6 border-t border-gray-200">
+            <p className="text-xs text-gray-500 mb-3 font-metropolis font-semibold uppercase tracking-wide">
+              Demo Credentials
             </p>
-            <div className="bg-blue-50 border-l-4 border-umak-blue p-4 rounded-lg text-xs space-y-2 font-metropolis">
-              <p className="text-gray-800">
+            <div className="bg-gray-50 border-l-4 border-umak-yellow p-4 rounded text-xs space-y-2 font-metropolis">
+              <p className="text-gray-700">
                 <span className="font-bold text-umak-blue">Email:</span> admin@umak.edu.ph
               </p>
-              <p className="text-gray-800">
+              <p className="text-gray-700">
                 <span className="font-bold text-umak-blue">Password:</span> demo123
               </p>
             </div>
           </div>
+
+          {/* Footer */}
+          <div className="mt-8 text-center">
+            <p className="text-gray-500 text-xs font-metropolis">
+              Need help? Contact{' '}
+              <a href="mailto:cic@umak.edu.ph" className="text-umak-blue font-semibold hover:underline">
+                cic@umak.edu.ph
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Right Side - Branding */}
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-umak-blue via-umak-blue-100 to-umak-blue-2 relative overflow-hidden">
+        {/* Decorative Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-umak-yellow rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-umak-yellow rounded-full blur-3xl"></div>
         </div>
 
-        {/* Footer */}
-        <div className="text-center mt-8">
-          <p className="text-gray-200 text-sm font-metropolis">
-            Need assistance? Contact{' '}
-            <a href="mailto:cic@umak.edu.ph" className="text-umak-yellow font-bold hover:underline">
-              cic@umak.edu.ph
-            </a>
-          </p>
-          <p className="text-gray-400 text-xs font-metropolis mt-2">
-            © 2026 University of Makati - Center for Integrated Communications
+        {/* Content */}
+        <div className="relative z-10 flex flex-col items-center justify-center w-full p-12 text-center">
+          {/* Logo */}
+          <div className="mb-12">
+            <div className="inline-block bg-umak-yellow p-8 rounded-3xl shadow-2xl mb-8">
+              <div className="w-32 h-32 bg-umak-blue rounded-2xl flex items-center justify-center">
+                <span className="text-7xl font-marcellus text-umak-yellow">CIC</span>
+              </div>
+            </div>
+            <h2 className="text-4xl font-marcellus text-white mb-4">
+              Center for Integrated Communications
+            </h2>
+            <p className="text-umak-yellow text-lg font-metropolis font-semibold tracking-widest">
+              UNIVERSITY OF MAKATI
+            </p>
+          </div>
+
+          {/* Features */}
+          <div className="space-y-6 max-w-md">
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-6">
+              <h3 className="text-white font-metropolis font-bold text-lg mb-2">Request Management</h3>
+              <p className="text-blue-100 font-metropolis text-sm">
+                Track and manage all service requests in one centralized dashboard
+              </p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-6">
+              <h3 className="text-white font-metropolis font-bold text-lg mb-2">Real-time Updates</h3>
+              <p className="text-blue-100 font-metropolis text-sm">
+                Monitor submission status and communicate with requestors instantly
+              </p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-6">
+              <h3 className="text-white font-metropolis font-bold text-lg mb-2">Analytics Dashboard</h3>
+              <p className="text-blue-100 font-metropolis text-sm">
+                Gain insights with comprehensive reports and data visualization
+              </p>
+            </div>
+          </div>
+
+          {/* Bottom Text */}
+          <p className="text-blue-200 text-xs font-metropolis mt-12">
+            © 2026 University of Makati. All rights reserved.
           </p>
         </div>
       </div>
