@@ -52,14 +52,6 @@ export const REQUEST_TYPES: RequestType[] = [
     number: '06',
     subtypes: ['New Entry', 'Page Updates', 'Content Management'],
     bgColor: 'bg-white'
-  },
-  { 
-    id: 'livestream', 
-    label: 'Livestreaming Services', 
-    description: 'Livestreaming support for university events. Note: Currently on hold while guidelines are being updated.',
-    number: '07',
-    subtypes: ['Event Livestreaming', 'Technical Support'],
-    bgColor: 'bg-orange-50'
   }
 ]
 

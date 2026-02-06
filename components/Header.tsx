@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
+import { LogIn, LogOut, User } from 'lucide-react'
+import { useAuth } from '@/contexts/AuthContext'
 
 interface HeaderProps {
   isLandingPage?: boolean
@@ -9,6 +11,7 @@ interface HeaderProps {
 
 export default function Header({ isLandingPage = false }: HeaderProps = {}) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const { user, profile, signOut, isConfigured } = useAuth()
 
   return (
     <header className="bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-200 sticky top-0 z-50">
@@ -57,12 +60,40 @@ export default function Header({ isLandingPage = false }: HeaderProps = {}) {
             >
               UMak Website
             </a>
-            <Link
-              href="/dashboard"
-              className="px-6 py-2.5 bg-umak-blue text-white rounded-lg hover:bg-blue-700 transition-all font-metropolis font-bold text-sm uppercase tracking-wider shadow-sm"
-            >
-              Dashboard
-            </Link>
+            
+            {isConfigured && user ? (
+              <>
+                <Link
+                  href="/dashboard"
+                  className="text-gray-600 hover:text-umak-blue font-metropolis text-sm font-medium transition-colors flex items-center gap-2"
+                >
+                  <User size={16} />
+                  {profile?.full_name || 'Dashboard'}
+                </Link>
+                <button
+                  onClick={() => signOut()}
+                  className="px-6 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all font-metropolis font-bold text-sm uppercase tracking-wider shadow-sm flex items-center gap-2"
+                >
+                  <LogOut size={16} />
+                  Logout
+                </button>
+              </>
+            ) : isConfigured ? (
+              <Link
+                href="/login"
+                className="px-6 py-2.5 bg-umak-blue text-white rounded-lg hover:bg-blue-700 transition-all font-metropolis font-bold text-sm uppercase tracking-wider shadow-sm flex items-center gap-2"
+              >
+                <LogIn size={16} />
+                Login
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                className="px-6 py-2.5 bg-umak-blue text-white rounded-lg hover:bg-blue-700 transition-all font-metropolis font-bold text-sm uppercase tracking-wider shadow-sm"
+              >
+                Login
+              </Link>
+            )}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -124,12 +155,43 @@ export default function Header({ isLandingPage = false }: HeaderProps = {}) {
             >
               UMak Website
             </a>
-            <Link
-              href="/dashboard"
-              className="block px-6 py-2.5 bg-umak-blue text-white rounded-lg hover:bg-blue-700 transition-all font-metropolis font-bold text-sm uppercase tracking-wider shadow-sm text-center"
-            >
-              Dashboard
-            </Link>
+            
+            {isConfigured && user ? (
+              <>
+                <Link
+                  href="/dashboard"
+                  className="text-gray-600 hover:text-umak-blue font-metropolis text-sm font-medium py-2 flex items-center gap-2"
+                >
+                  <User size={16} />
+                  {profile?.full_name || 'Dashboard'}
+                </Link>
+                <button
+                  onClick={() => {
+                    signOut()
+                    setIsMenuOpen(false)
+                  }}
+                  className="w-full px-6 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all font-metropolis font-bold text-sm uppercase tracking-wider shadow-sm text-center flex items-center justify-center gap-2"
+                >
+                  <LogOut size={16} />
+                  Logout
+                </button>
+              </>
+            ) : isConfigured ? (
+              <Link
+                href="/login"
+                className="px-6 py-2.5 bg-umak-blue text-white rounded-lg hover:bg-blue-700 transition-all font-metropolis font-bold text-sm uppercase tracking-wider shadow-sm text-center flex items-center justify-center gap-2"
+              >
+                <LogIn size={16} />
+                Login
+              </Link>
+            ) : (
+              <Link
+                href="/login"
+                className="w-full px-6 py-2.5 bg-umak-blue text-white rounded-lg hover:bg-blue-700 transition-all font-metropolis font-bold text-sm uppercase tracking-wider shadow-sm text-center"
+              >
+                Login
+              </Link>
+            )}
           </div>
         )}
       </div>

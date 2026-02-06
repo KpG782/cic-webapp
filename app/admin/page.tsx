@@ -4,26 +4,44 @@ import { useState } from 'react'
 import { LogIn } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { useAuth } from '@/contexts/AuthContext'
+import LoadingSpinner from '@/components/LoadingSpinner'
+import SetupRequired from '@/components/SetupRequired'
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
   const router = useRouter()
+  const { signIn, isConfigured } = useAuth()
+
+  // Show setup required if Supabase is not configured
+  if (!isConfigured) {
+    return <SetupRequired />
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setError('')
     setLoading(true)
 
-    // Simulate login - replace with actual authentication later
-    setTimeout(() => {
-      if (email === 'admin@umak.edu.ph' && password === 'demo123') {
-        router.push('/dashboard')
-      } else {
-        alert('Invalid credentials. Use admin@umak.edu.ph / demo123')
+    try {
+      const { error } = await signIn(email, password)
+      
+      if (error) {
+        setError(error.message)
         setLoading(false)
+        return
       }
-    }, 1000)
+
+      // Check if user is admin (will be checked in middleware too)
+      // Redirect to dashboard - middleware will handle role-based access
+      router.push('/dashboard')
+    } catch (err) {
+      setError('An unexpected error occurred')
+      setLoading(false)
+    }
   }
 
   return (
@@ -50,6 +68,13 @@ export default function AdminLoginPage() {
               Sign in to access the request management system
             </p>
           </div>
+
+          {/* Error Message */}
+          {error && (
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-red-600 text-sm font-metropolis">{error}</p>
+            </div>
+          )}
 
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -103,7 +128,7 @@ export default function AdminLoginPage() {
               className="w-full bg-umak-blue text-white py-4 rounded-md font-bold hover:bg-umak-blue-2 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg font-metropolis text-sm uppercase tracking-widest"
             >
               {loading ? (
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                <LoadingSpinner size="sm" />
               ) : (
                 <>
                   <LogIn size={18} />
@@ -113,17 +138,14 @@ export default function AdminLoginPage() {
             </button>
           </form>
 
-          {/* Demo Credentials */}
+          {/* Info Note */}
           <div className="mt-8 pt-6 border-t border-gray-200">
             <p className="text-xs text-gray-500 mb-3 font-metropolis font-semibold uppercase tracking-wide">
-              Demo Credentials
+              Admin Access Only
             </p>
-            <div className="bg-gray-50 border-l-4 border-umak-yellow p-4 rounded text-xs space-y-2 font-metropolis">
+            <div className="bg-blue-50 border-l-4 border-umak-blue p-4 rounded text-xs space-y-2 font-metropolis">
               <p className="text-gray-700">
-                <span className="font-bold text-umak-blue">Email:</span> admin@umak.edu.ph
-              </p>
-              <p className="text-gray-700">
-                <span className="font-bold text-umak-blue">Password:</span> demo123
+                This portal is for CIC administrators only. Regular users should use the <Link href="/login" className="text-umak-blue font-semibold hover:underline">User Login</Link>.
               </p>
             </div>
           </div>

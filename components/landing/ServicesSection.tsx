@@ -52,25 +52,6 @@ const services: Service[] = [
     description: 'Request new website entries or updates to existing pages for your office or unit.',
     status: 'available',
     requestType: 'website'
-  },
-  {
-    id: 'livestream',
-    title: 'Livestreaming Services',
-    description: 'Livestreaming support for university events. Currently on hold while guidelines are being updated.',
-    status: 'on-hold',
-    requestType: 'livestream'
-  },
-  {
-    id: 'giveaways',
-    title: 'Corporate Giveaways',
-    description: 'University-branded merchandise for official use. Subject to budget allocation and annual supply.',
-    status: 'coming-soon'
-  },
-  {
-    id: 'permits',
-    title: 'Posting Permits',
-    description: 'Permission to post posters, tarpaulins, and other promotional materials across the university.',
-    status: 'coming-soon'
   }
 ]
 

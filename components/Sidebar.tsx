@@ -16,6 +16,7 @@ import {
   ChevronRight
 } from 'lucide-react'
 import { useSidebar } from '@/contexts/SidebarContext'
+import { useAuth } from '@/contexts/AuthContext'
 
 const menuItems = [
   { label: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
@@ -32,13 +33,23 @@ export default function Sidebar() {
   const { isOpen, toggleSidebar } = useSidebar()
   const pathname = usePathname()
   const router = useRouter()
+  const { user, profile, signOut } = useAuth()
 
-  const handleLogout = () => {
-    // Clear any stored authentication data (if you add it later)
-    // localStorage.removeItem('authToken')
-    
-    // Redirect to login page
-    router.push('/')
+  const handleLogout = async () => {
+    await signOut()
+  }
+
+  // Get user initials
+  const getInitials = () => {
+    if (profile?.full_name) {
+      return profile.full_name
+        .split(' ')
+        .map(n => n[0])
+        .join('')
+        .toUpperCase()
+        .slice(0, 2)
+    }
+    return user?.email?.[0].toUpperCase() || 'U'
   }
 
   return (
@@ -124,11 +135,15 @@ export default function Sidebar() {
           <>
             <div className="flex items-center gap-3 px-4 py-3 mb-2">
               <div className="w-10 h-10 rounded-full bg-umak-yellow flex items-center justify-center text-umak-blue font-bold font-marcellus text-lg flex-shrink-0">
-                KG
+                {getInitials()}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold font-metropolis truncate">Ken Garcia</p>
-                <p className="text-xs text-gray-300 font-metropolis">Administrator</p>
+                <p className="text-sm font-semibold font-metropolis truncate">
+                  {profile?.full_name || user?.email || 'User'}
+                </p>
+                <p className="text-xs text-gray-300 font-metropolis">
+                  {profile?.role === 'admin' ? 'Administrator' : 'User'}
+                </p>
               </div>
             </div>
             <button 
@@ -142,7 +157,7 @@ export default function Sidebar() {
         ) : (
           <div className="flex flex-col items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-umak-yellow flex items-center justify-center text-umak-blue font-bold font-marcellus text-lg">
-              KG
+              {getInitials()}
             </div>
             <button 
               onClick={handleLogout}

@@ -2,7 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Metropolis Font Family */
+/* Metropolis Font Family - Using system fonts as fallback */
+/* To use custom Metropolis fonts, download them and place in /public/fonts/metropolis/ */
+/*
 @font-face {
   font-family: 'Metropolis';
   src: url('/fonts/metropolis/Metropolis-Regular.woff2') format('woff2');
@@ -34,6 +36,7 @@
   font-style: normal;
   font-display: swap;
 }
+*/
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {

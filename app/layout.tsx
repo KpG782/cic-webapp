@@ -1,5 +1,6 @@
 import { Marcellus } from 'next/font/google'
 import './globals.css'
+import { AuthProvider } from '@/contexts/AuthContext'
 
 const marcellus = Marcellus({
   weight: '400',
@@ -19,7 +20,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={marcellus.variable}>
-      <body className="font-metropolis bg-gray-50">{children}</body>
+      <body className="font-metropolis bg-gray-50">
+        <AuthProvider>{children}</AuthProvider>
+      </body>
     </html>
   )
 }
